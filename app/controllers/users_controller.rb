@@ -11,4 +11,8 @@ class UsersController < ApplicationController
     @book = User.new
     @users = User.all
   end
+
+  def create
+    @user = User.new()
+  end
 end
