@@ -4,10 +4,26 @@
       <%= render 'users/user_template', user:@user %>
       <%= render 'books/book_template', book:@book %>
     </div>
-    <div class="col-md-3">
-      <%= @user.each do |f| %>
-      
-    </div>
+    <div class="col-md-8 offser-md-1">
+      <h2>Users</h2>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>プロフィール画像</th>
+              <th>投稿者名</th>
+            </tr>
+          </thead>
+          <tbody>
+        <% @users.each do |f| %>
+          <tr>
+            <td><%= attachment_image_tag f, :profile_image, :fill, 100, 100, format: "jpeg", fallback: "no_image.jpg" %></td>
+            <td><%= f.name %></td>
+            <td><%= link_to "Show", user_path(f) %></td>
+          </tr>
+        <% end %>
+        </tbody>
+       </table>
+      </div>
   </div>
 </div>
 
