@@ -1,19 +1,33 @@
 class BooksController < ApplicationController
   def index
+    @book_new = Book.new
+    @user = current_user
+    @books = Book.all
   end
 
   def show
-  end
-
-  def update
-  end
-
-  def destroy
-  end
-
-  def edit
+    @book = Book.find(params[:id])
+    @user = current_user
+    @booknew = Book.new
   end
 
   def create
+    @book_new = Book.new(book_params)
+    @book_new.user_id = current_user.id
+    @book_new.save
+    redirect_to book_path(@book)
+  end
+
+  def destroy
+    book = Book.find(params[:id])
+    book.destroy
+    redirect_to books_path
+  end
+
+  private
+
+  def book_params
+  params.require(:book).permit(:title, :body)
+  # これが小文字の理由は？
   end
 end
