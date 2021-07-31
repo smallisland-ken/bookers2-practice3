@@ -36,7 +36,14 @@
   </nav>
   </header>
   <main>
-
+    <div class="container">
+    <% if notice %>
+　　<p><%= notice %></p>
+    <% end %>
+    <% if alert %>
+    <p><%= alert %></p>
+　　<% end %>
+　　</div>
     <%= yield %>
 
   </main>

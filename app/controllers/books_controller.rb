@@ -18,6 +18,20 @@ class BooksController < ApplicationController
     redirect_to book_path(@book)
   end
 
+  def edit
+    @book = Book.find(params[:id])
+  end
+
+  def update
+    @book = Book.find(params[:id])
+    if @book.update(book_params)
+    flash[:notice] = "You have updated successfully!"
+    redirect_to book_path(@book)
+    else
+      render:edit
+    end
+  end
+
   def destroy
     book = Book.find(params[:id])
     book.destroy
@@ -27,7 +41,7 @@ class BooksController < ApplicationController
   private
 
   def book_params
-  params.require(:book).permit(:title, :body)
+  params.require(:book).permit(:title, :introduction)
   # これが小文字の理由は？
   end
 end

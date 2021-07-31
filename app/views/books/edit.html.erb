@@ -1,2 +1,39 @@
-<h1>Books#edit</h1>
-<p>Find me in app/views/books/edit.html.erb</p>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 col-md-8 col-lg-5 px-5 px-sm-0  mx-auto">
+      <h2 class="mt-3">Bookの編集</h2>
+      
+        <%# ここからエラーメッセージ %>
+        <% if @book.errors.any? %>
+          <div id="error_explanation">
+            <div class="error"><%= pluralize(@book.errors.count, "error") %> prohibited this product from being saved:</div>
+            <ul>
+              <% @book.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+            </ul>
+          </div>
+        <% end %>
+        <%# ここまでエラーメッセージ <%>
+      
+      
+        <%= form_with model:@book, local: true do |f| %>
+          <div class="form-group mt-3">
+            <%= f.label :タイトル %>
+            <%= f.text_field :title, class: "form-control" %>
+          </div>
+
+          <div class="form-group mt-3" %>
+            <%= f.label :本の感想 %>
+            <%= f.text_field :body, class: "form-control" %>
+          </div>
+
+          <div class="form-group">
+            <%= f.submit "本の更新", class:"btn btn-success" %>
+          </div>
+        <% end %>
+        <%= link_to "Show", books_path %> | <%= link_to " back", book_path(@book) %>
+      </div>
+  </div>
+</div>
+
