@@ -1,25 +1,38 @@
 class BooksController < ApplicationController
+    before_action :authenticate_user!
+
+
   def index
-    @book_new = Book.new
+    @book = Book.new
     @user = current_user
     @books = Book.all
   end
 
   def show
     @book = Book.find(params[:id])
-    @user = current_user
-    @booknew = Book.new
+    @book_new = Book.new
+    @bookuser = @book.user
   end
 
   def create
     @book_new = Book.new(book_params)
     @book_new.user_id = current_user.id
-    @book_new.save
-    redirect_to book_path(@book)
+    if @book_new.save
+    flash[:notice] = "You have created a new book!"
+    redirect_to book_path(@book_new)
+    else
+      @user = current_user
+      @books = Book.all
+      render :index
+    end
   end
 
   def edit
     @book = Book.find(params[:id])
+    unless @book.user == current_user
+      redirect_to books_path
+      
+    end
   end
 
   def update
@@ -41,7 +54,6 @@ class BooksController < ApplicationController
   private
 
   def book_params
-  params.require(:book).permit(:title, :introduction)
-  # これが小文字の理由は？
+  params.require(:book).permit(:title, :body)
   end
 end
